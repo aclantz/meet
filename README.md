@@ -38,34 +38,34 @@ user.
 - The app must be monitored using an online performance monitoring tool.
 
 ## User Stories (Gherkin)
-Scenario 1: Filter Events by City
-  *Given* the user hasn't searched for any city
-  *When* the user opens the app
-  *Then* the user should see a list of upcoming events
+Scenario 1: Filter Events by City <br/>0
+  *Given* the user hasn't searched for any city <br/>
+  *When* the user opens the app <br/>
+  *Then* the user should see a list of upcoming events 
 
-Scenario 2: Show/Hide Event Details
-  *Given* the user is viewing the events page
-  *When* they choose to show event details
-  *Then* the event details should be displayed
-    And when they choose to hide event details
-    Then the event details should be hidden
+Scenario 2: Show/Hide Event Details <br/>
+  *Given* the user is viewing the events page <br/>
+  *When* they choose to show event details <br/>
+  *Then* the event details should be displayed <br/>
+    And when they choose to hide event details <br/>
+    Then the event details should be hidden 
   
-Scenario 3: Specify Number of Events
-  *Given* the user is on the events page
-  *When* they specify the number of events to display
-  *Then* the specified number of events should be shown
+Scenario 3: Specify Number of Events <br/>
+  *Given* the user is on the events page <br/>
+  *When* they specify the number of events to display <br/>
+  *Then* the specified number of events should be shown 
   
-Scenario 4: Use the App *When* Offline
-  *Given* the user has previously accessed the app
-  *When* they lose internet connectivity
-  *Then* they should still be able to use the app
+Scenario 4: Use the App *When* Offline <br/>
+  *Given* the user has previously accessed the app <br/>
+  *When* they lose internet connectivity <br/>
+  *Then* they should still be able to use the app 
   
-Scenario 5: Add an App Shortcut to the Home Screen
-  *Given* the user is accessing the app from a mobile device
-  *When* they choose to add a shortcut to the home screen
-  *Then* an app shortcut should be added
+Scenario 5: Add an App Shortcut to the Home Screen <br/>
+  *Given* the user is accessing the app from a mobile device <br/>
+  *When* they choose to add a shortcut to the home screen <br/>
+  *Then* an app shortcut should be added 
   
-Scenario 6: Display Charts Visualizing Event Details
-  *Given* the user is viewing event details
-  *When* they navigate to the charts section
-  *Then* visualizations representing event details should be displayed
+Scenario 6: Display Charts Visualizing Event Details <br/>
+  *Given* the user is viewing event details <br/>
+  *When* they navigate to the charts section <br/>
+  *Then* visualizations representing event details should be displayed 
