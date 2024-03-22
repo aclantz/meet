@@ -52,37 +52,62 @@ user.
 6. As a user, I should be able to view charts that display information and details about the events, so that I can have a better understanding of what kind of events are happening in the city.
 
 ## Scenarios 
-Scenario 1: Filter Events by City 
+Scenario 1: Filter events for a mix of Cities 
   - *Given* the user hasn't searched for any city 
   - *When* the user opens the app main page
   - *Then* the user should see an option to search for a city, and a list of events for a variety of cities.
 
-Scenario 2: Show a list of events for a selected CIty
-  - *Given* the user has searched for a selected a City
-  - *When* the user looks at the event page for that City
-  - *Then* the user should see a list of events for only the Specified City
+Scenario 2: Suggestion list when searching for a city
+  - *Given* the user hasn't searched for a city 
+  - *When* the user begins to type a city name into the search bar
+  - *Then* the user will be shown a suggested list of cities based on what they have typed in.
 
-Scenario 3: Show/Hide Event Details 
-  - *Given* the user is viewing the events page for a selected city
-  - *When* they choose to show event details 
-  - *Then* the event details should be displayed, and when they choose to hide event details then the event details should be hidden 
+Scenario 3: Selecting a city
+  - *Given* the user has searched for a city in the search bar
+  - *When* the user chooses a city from the list that has been rendered
+  - *Then* the user will be then be able to city the events that exist in the city they selected.
+
+Scenario 4: Default of event element
+  - *Given* the user is viewing the list of events for a selected city
+  - *When* the user looks at a specific event
+  - *Then* the user will see that the extra details about the event is collapsed
+
+Scenario 5: Expand an event to see more details
+  - *Given* the use has an event they wish to know more about
+  - *When* the user clicks the expand button
+  - *Then* the user will see an expanded description of the event
+
+Scenario 6: Collapse an event to see less details
+  - *Given* the user doesn't wish to see any more details about an expanded event
+  - *When* the user clicks the collapse button
+  - *Then* the user will see a collapsed version of the event with less details (the default)
   
-Scenario 4: Specify Number of Events 
-  - *Given* the user is on the events page 
-  - *When* they specify the number of events to display 
-  - *Then* the specified number of events should be shown 
+Scenario 7: Specify Number of Events 
+  - *Given* the user is looking at a selected city, and hasn't changed the default number of events displayed 
+  - *When* the user looks at the list of events
+  - *Then* they will see 20 events at a time
+
+Scenario 8: User change the number of events shown
+  - *Given* the user is looking at a specific city and its list of events
+  - *When* the user selects the event view control
+  - *Then* the user can choose how many events to see at one time
   
-Scenario 5: Use the App *When* Offline 
+Scenario 9: Use the App when Offline 
   - *Given* the user has previously accessed the app 
   - *When* they lose internet connectivity 
-  - *Then* they should still be able to use the app 
+  - *Then* they should still be able to see the cached data they have viewed
+
+Scenario 10: Error when offline and changing search settings
+  - *Given* the user has previously accessed the app, and currently does not have internet access
+  - *When* the user changes the search options
+  - *Then* the user will be shown an error
   
-Scenario 6: Add an App Shortcut to the Home Screen
+Scenario 11: Add an App Shortcut to the Home Screen
   - *Given* the user is accessing the app from a mobile device 
   - *When* they choose to add a shortcut to the home screen 
   - *Then* an app shortcut should be added 
   
-Scenario 7: Display Charts Visualizing Event Details 
+Scenario 12: Display Charts Visualizing Event Details 
   - *Given* the user is viewing event details 
   - *When* they navigate to the charts section 
   - *Then* visualizations representing event details should be displayed 
