@@ -25,6 +25,10 @@ provider:
   runtime: nodejs18.x
   region: us-east-1
   timeout: 30
+  environment:
+    CLIENT_ID: ${file(config.json):CLIENT_ID}
+    CLIENT_SECRET: ${file(config.json):CLIENT_SECRET}
+    CALENDAR_ID: ${file(config.json):CALENDAR_ID}
 
 # you can overwrite defaults here
 #  stage: dev
@@ -47,13 +51,7 @@ provider:
 #              - - "arn:aws:s3:::"
 #                - "Ref" : "ServerlessDeploymentBucket"
 #                - "/*"
-
-# you can define service wide environment variables here
-environment:
-  CLIENT_ID: ${file(config.json):CLIENT_ID}
-  CLIENT_SECRET: ${file(config.json):CLIENT_SECRET}
-  CALENDAR_ID: ${file(config.json):CALENDAR_ID}
-
+  
 # you can add packaging information here
 #package:
 #  patterns:
@@ -63,8 +61,6 @@ environment:
 #    - include-me-dir/**
 
 functions:
-  hello:
-    handler: handler.hello
   getAuthURL:
     handler: handler.getAuthURL
     events:
