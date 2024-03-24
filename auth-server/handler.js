@@ -1,16 +1,16 @@
-'use strict';
+"use strict";
 
 // packages
 const { google } = require("googleapis");
 const calendar = google.calendar("v3");
 // scopes managed @ "oAuth consent screen"settings in Google console
-const SCOPES = ["https://www.googleapis.com/auth/calendar.events.public.readonly"];
-// variables set in serverless.yml/environments which is set in config.js 
+const SCOPES = [
+  "https://www.googleapis.com/auth/calendar.events.public.readonly",
+];
+// variables set in serverless.yml/environments which is set in config.js
 const { CLIENT_SECRET, CLIENT_ID, CALENDAR_ID } = process.env;
 
-const redirect_uris = [
-  "https://aclantz.github.io/meet/" 
-];
+const redirect_uris = ["https://aclantz.github.io/meet/"];
 // new instance of OAuth2, redirect_uris[0] is calling the first in redirect-uris array
 const oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
@@ -29,8 +29,8 @@ module.exports.getAuthURL = async () => {
   return {
     statusCode: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
     },
     body: JSON.stringify({
       authUrl,
@@ -51,12 +51,12 @@ module.exports.getAccessToken = async (event) => {
     });
   })
     .then((results) => {
-      // Respond with OAuth token 
+      // Respond with OAuth token
       return {
         statusCode: 200,
         headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
         },
         body: JSON.stringify(results),
       };
@@ -67,4 +67,48 @@ module.exports.getAccessToken = async (event) => {
         body: JSON.stringify(error),
       };
     });
+};
+
+module.exports.getCalendarEvents = async (event) => {
+  const access_token = decodeURIComponent(
+    `${event.pathParameters.access_token}`
+  );
+  oAuth2Client.setCredentials({ access_token });
+
+  new Promise((resolve, reject) => {
+    calendar.events
+      .list(
+        {
+          calendarId: CALENDAR_ID,
+          auth: oAuth2Client,
+          timeMin: new Date().toISOString(),
+          singleEvents: true,
+          orderBy: "startTime",
+        },
+        (error, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(response);
+          }
+        }
+      )
+      .then((results) => {
+        // Respond with OAuth token
+        return {
+          statusCode: 200,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+          },
+          body: JSON.stringify({ events: results.data.items }),
+        };
+      })
+      .catch((error) => {
+        return {
+          statusCode: 500,
+          body: JSON.stringify(error),
+        };
+      });
+  });
 };
