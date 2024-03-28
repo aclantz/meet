@@ -41,7 +41,6 @@ module.exports.getAuthURL = async () => {
 module.exports.getAccessToken = async (event) => {
   // Decode authorization code extracted from the URL query
   const code = decodeURIComponent(`${event.pathParameters.code}`);
-
   return new Promise((resolve, reject) => {
     oAuth2Client.getToken(code, (error, response) => {
       if (error) {
@@ -75,7 +74,7 @@ module.exports.getCalendarEvents = async (event) => {
   );
   oAuth2Client.setCredentials({ access_token });
 
-  new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     calendar.events
       .list(
         {
@@ -94,6 +93,52 @@ module.exports.getCalendarEvents = async (event) => {
         }
       )
       .then((results) => {
+        console.log(results);
+        // Respond with OAuth token
+        return {
+          statusCode: 200,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+          },
+          body: JSON.stringify({ events: results.data.items }),
+        };
+      })
+      .catch((error) => {
+        return {
+          statusCode: 500,
+          body: JSON.stringify(error),
+        };
+      });
+  });
+};
+
+module.exports.getCalendarEventsTwo = async (event) => {
+  const access_token = decodeURIComponent(
+    `${event.pathParameters.access_token}`
+  );
+  oAuth2Client.setCredentials({ access_token });
+
+  return new Promise((resolve, reject) => {
+    calendar.events
+      .list(
+        {
+          calendarId: CALENDAR_ID,
+          auth: oAuth2Client,
+          timeMin: new Date().toISOString(),
+          singleEvents: true,
+          orderBy: "startTime",
+        },
+        (error, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(response);
+          }
+        }
+      )
+      .then((results) => {
+        console.log(results);
         // Respond with OAuth token
         return {
           statusCode: 200,

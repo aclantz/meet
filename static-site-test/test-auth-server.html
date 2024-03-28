@@ -35,12 +35,14 @@
         >Code input
         <input id="code" type="text" value="" />
       </label>
-      <button id="getToken">Get Token</button>
+      <button id="getToken">Get Token !!!!</button>
       <p id="accessToken"></p>
       <!-- STEP 3 -- MAKE SURE STEP 2 WORKS BEFORE MOVING ON-->
       <h4>Step 3: Get the calendar events using your access token</h4>
       <button id="getEvents">Get Events</button>
+      <button id="getEventsTwo">Get Events 2</button>
       <p id="events"></p>
+      <p id="eventsTwo"></p>
     </main>
     <script type="text/javascript">
       const getAuthUrlButton = document.getElementById("getAuthUrlButton");
@@ -104,6 +106,23 @@
           });
       };
       // -- END OF STEP 3
+      // step 4
+      const getEventsTwo = document.getElementById("getEventsTwo");
+      const eventsTwo = document.getElementById("eventsTwo");
+      const getCalendarEventsTwo =
+        "https://nqfz0iks7l.execute-api.us-east-1.amazonaws.com/dev/api/get-eventsTwo";
+
+      getEventsTwo.onclick = function () {
+        const { access_token } = JSON.parse(accessTokenElement.innerText);
+        const eventRequest = getCalendarEventsTwo + "/" + access_token;
+        fetch(eventRequest)
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (json) {
+            eventsTwo.innerText = JSON.stringify(json, null, 2);
+          });
+      };
     </script>
   </body>
 </html>
